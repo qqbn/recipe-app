@@ -5,9 +5,9 @@ interface Props {
 const Switcher = ({ handleSetActive, active }: Props) => {
     return (
         <>
-            <div className='min-w-full flex mt-8 justify-center gap-x-10'>
+            <div className='min-w-full flex mt-8 justify-center'>
                 <button className={"btn" + (!active ? " btn-green btn-active" : "")} onClick={handleSetActive}>Search</button>
-                <button className={"btn" + (active ? " btn-red btn-active" : "")} onClick={handleSetActive}>Saved Notes</button>
+                <button className={"btn" + (active ? " btn-green btn-active" : "")} onClick={handleSetActive}>Saved Notes</button>
             </div>
         </>
 

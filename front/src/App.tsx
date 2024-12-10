@@ -23,6 +23,7 @@ function App() {
     if (searchValue.trim() === '') return;
 
     const newMessage: Message = {
+      id: 1,
       type: 'user',
       value: searchValue,
     }
@@ -41,6 +42,7 @@ function App() {
 
     } finally {
       const autoMessage: Message = {
+        id: 1,
         type: 'response',
         value: auotMsg,
         save: false,
@@ -70,7 +72,7 @@ function App() {
           handleSaveMessage={handleSaveMessagage}
         />
         :
-        <Notes />
+        <Notes messages={messages} />
       }
     </>
   )
