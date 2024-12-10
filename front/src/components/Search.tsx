@@ -1,41 +1,15 @@
-import { useState } from "react";
 import { Message } from "../interfaces/interfaces";
 import Chat from "./Chat";
 
-const Search = () => {
-    const [searchValue, setSearchValue] = useState<string>('');
-    const [messages, setMessages] = useState<Message[]>([]);
-    const auotMsg = 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui iure doloremque odio, quidem rerum at veritatis maxime distinctio nihil, velit, saepe explicabo mollitia? Vel, repudiandae?'
+interface Props {
+    handleSendMessage: () => void,
+    messages: Message[],
+    handleSetSearchValue: (arg0: string) => void,
+    searchValue: string,
+    handleSaveMessage: (arg0: number) => void,
+}
 
-    const handleSendMessage = async () => {
-        if (searchValue.trim() === '') return;
-
-        const newMessage: Message = {
-            type: 'user',
-            value: searchValue,
-        }
-
-        const newMessages: Message[] = [...messages, newMessage];
-        setMessages(newMessages);
-        await sendMessage(newMessage);
-        setSearchValue('');
-
-    }
-
-    const sendMessage = async (message: Message): Promise<void> => {
-        try {
-            console.log('handle send message: ', message);
-        } catch (error) {
-
-        } finally {
-            const autoMessage: Message = {
-                type: 'response',
-                value: auotMsg
-            }
-            setMessages(prevMessages => [...prevMessages, autoMessage]);
-        }
-    }
-
+const Search = ({ handleSendMessage, messages, handleSetSearchValue, searchValue, handleSaveMessage }: Props) => {
 
     return (
         <>
@@ -45,7 +19,7 @@ const Search = () => {
                     className="min-h-14 p-2 min-w-full rounded-3xl focus:outline-none text-white-700 bg-gray-950"
                     placeholder="Search..."
                     value={searchValue}
-                    onChange={(e) => setSearchValue(e.target.value)}
+                    onChange={(e) => handleSetSearchValue(e.target.value as string)}
                 />
                 <button
                     className="btn-searach p-4 rounded-full bg-white absolute right-2 top-1/2 transform -translate-y-1/2"
@@ -55,7 +29,7 @@ const Search = () => {
                 </button>
             </div>
 
-            {messages.length > 0 && <Chat messages={messages} />}
+            {messages.length > 0 && <Chat messages={messages} handleSaveMessage={handleSaveMessage} />}
 
         </>
     )
