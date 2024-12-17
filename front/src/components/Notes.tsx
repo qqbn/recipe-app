@@ -6,15 +6,16 @@ import Note from "./Note"
 
 interface Props {
     messages: Message[],
+    handleDragEnd: (arg1: any) => void,
 }
 
-const Notes = ({ messages }: Props) => {
+const Notes = ({ messages, handleDragEnd }: Props) => {
     return (
-        <DndContext collisionDetection={closestCorners}>
+        <DndContext onDragEnd={handleDragEnd} collisionDetection={closestCorners}>
             <SortableContext items={messages} strategy={verticalListSortingStrategy}>
                 <NotesWrapper>
-                    {messages.map((message, index) => (
-                        <Note key={message.id} content={message} />
+                    {messages.map((message) => (
+                        <Note id={message.id} content={message} />
                     ))}
                 </NotesWrapper>
             </SortableContext>

@@ -6,6 +6,7 @@ import { Message } from "./interfaces/interfaces";
 import './App.css'
 
 function App() {
+  let id = 0;
   const [active, setActive] = useState(false);
   const [searchValue, setSearchValue] = useState<string>('');
   const [messages, setMessages] = useState<Message[]>([]);
@@ -23,7 +24,7 @@ function App() {
     if (searchValue.trim() === '') return;
 
     const newMessage: Message = {
-      id: 1,
+      id: id++,
       type: 'user',
       value: searchValue,
     }
@@ -42,7 +43,7 @@ function App() {
 
     } finally {
       const autoMessage: Message = {
-        id: 1,
+        id: id++,
         type: 'response',
         value: auotMsg,
         save: false,
@@ -59,6 +60,13 @@ function App() {
     )
   }
 
+  const handleDragEnd = (event: any) => {
+    const { active, over } = event;
+
+    console.log(active);
+    console.log(over);
+  }
+
   return (
     <>
       <h1 className="text-white text-8xl font-bold mt-6">Recipe app</h1>
@@ -72,7 +80,7 @@ function App() {
           handleSaveMessage={handleSaveMessagage}
         />
         :
-        <Notes messages={messages} />
+        <Notes handleDragEnd={handleDragEnd} messages={messages} />
       }
     </>
   )
