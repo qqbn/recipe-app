@@ -1,15 +1,18 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Switcher from './components/Switcher'
 import Search from './components/Search'
 import Notes from './components/Notes'
-import { Message } from "./interfaces/interfaces";
+import { Message, Note } from "./interfaces/interfaces";
+import axios from 'axios';
 import './App.css'
 
 function App() {
+  const apiurl = 'http://localhost:3000/';
   let id = 0;
   const [active, setActive] = useState(false);
   const [searchValue, setSearchValue] = useState<string>('');
   const [messages, setMessages] = useState<Message[]>([]);
+  const [notes, setNotes] = useState<Note[]>([]);
   const auotMsg = 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui iure doloremque odio, quidem rerum at veritatis maxime distinctio nihil, velit, saepe explicabo mollitia? Vel, repudiandae?'
 
   const handleSetActive = () => {
@@ -63,9 +66,23 @@ function App() {
   const handleDragEnd = (event: any) => {
     const { active, over } = event;
 
-    console.log(active);
-    console.log(over);
+    console.log('active:', active);
+    console.log('over', over);
+    if (active.id === over.id) return;
   }
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(apiurl + 'notes');
+        console.log(response);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    fetchData();
+  }, [])
 
   return (
     <>

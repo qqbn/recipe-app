@@ -4,3 +4,9 @@ export interface Message {
     value: string,
     save?: boolean,
 }
+
+export interface Note {
+    id: number,
+    content: string,
+    createdAt: Date,
+}
