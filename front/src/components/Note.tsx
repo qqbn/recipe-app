@@ -1,12 +1,12 @@
-import { Message } from '../interfaces/interfaces'
+import { Note as NoteInterface } from '../interfaces/interfaces'
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 
 interface Props {
-    content: Message
+    note: NoteInterface
     id: number
 }
-const Note = ({ content, id }: Props) => {
+const Note = ({ note, id }: Props) => {
     const {
         attributes,
         isDragging,
@@ -29,7 +29,7 @@ const Note = ({ content, id }: Props) => {
             {...listeners}
         >
             <div className='max-w-[150px] flex justify-center items-start max-w-[200px] p-3 rounded-lg text-white bg-gray-800 mb-4'>
-                {content.value}
+                {note.content}
             </div>
         </div>
     )

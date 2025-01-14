@@ -5,6 +5,7 @@ import Notes from './components/Notes'
 import { Message, Note } from "./interfaces/interfaces";
 import axios from 'axios';
 import './App.css'
+import { arrayMove } from "@dnd-kit/sortable";
 
 function App() {
   const apiurl = 'http://localhost:3000/';
@@ -55,7 +56,10 @@ function App() {
     }
   }
 
-  const handleSaveMessagage = (index: number) => {
+  const handleSaveMessage = (index: number) => {
+
+    const message = messages[index];
+
     setMessages(prevMessages =>
       prevMessages.map((message, messageIndex) =>
         messageIndex === index ? { ...message, save: !message.save } : message
@@ -63,19 +67,27 @@ function App() {
     )
   }
 
+  const getNotePosition = (id: number) => {
+    return notes.findIndex(note => note.id === id);
+  }
+
   const handleDragEnd = (event: any) => {
     const { active, over } = event;
-
-    console.log('active:', active);
-    console.log('over', over);
     if (active.id === over.id) return;
+
+    setNotes((notes) => {
+      const oldIndex = getNotePosition(active.id);
+      const newIndex = getNotePosition(over.id);
+
+      return arrayMove(notes, oldIndex, newIndex);
+    })
   }
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(apiurl + 'notes');
-        console.log(response);
+        setNotes(response.data);
       } catch (error) {
         console.log(error);
       }
@@ -94,10 +106,10 @@ function App() {
           messages={messages}
           handleSetSearchValue={handleSetSearchValue}
           searchValue={searchValue}
-          handleSaveMessage={handleSaveMessagage}
+          handleSaveMessage={handleSaveMessage}
         />
         :
-        <Notes handleDragEnd={handleDragEnd} messages={messages} />
+        <Notes handleDragEnd={handleDragEnd} notes={notes} />
       }
     </>
   )
