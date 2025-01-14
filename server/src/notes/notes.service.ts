@@ -14,7 +14,8 @@ export class NotesService {
 
   async create(createNoteDto: CreateNoteDto): Promise<Note> {
     const note = this.notesRepository.create(createNoteDto);
-    return await this.notesRepository.save(note);
+    const savedNote = await this.notesRepository.save(note);
+    return savedNote;
   }
 
   async findAll(): Promise<Note[]> {
