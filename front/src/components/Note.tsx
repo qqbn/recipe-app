@@ -4,16 +4,17 @@ import { CSS } from "@dnd-kit/utilities";
 
 interface Props {
     note: NoteInterface
-    id: number
+    id: number,
+    handleClick: () => void,
 }
-const Note = ({ note, id }: Props) => {
+const Note = ({ note, id, handleClick }: Props) => {
     const {
         attributes,
         isDragging,
         listeners,
         setNodeRef,
         transform,
-        transition
+        transition,
     } = useSortable({ id: id });
 
     const style = {
@@ -28,8 +29,8 @@ const Note = ({ note, id }: Props) => {
             {...attributes}
             {...listeners}
         >
-            <div className='max-w-[150px] flex justify-center items-start max-w-[200px] p-3 rounded-lg text-white bg-gray-800 mb-4'>
-                {note.content}
+            <div onClick={() => { if (!isDragging) handleClick() }} className="TEST max-w-[150px] flex justify-center items-start p-3 rounded-lg text-white bg-gray-800 mb-4 cursor-pointer">
+                {note.title}
             </div>
         </div>
     )

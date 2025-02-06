@@ -58,7 +58,14 @@ function App() {
 
   const handleSaveMessage = (index: number) => {
 
-    const message = messages[index];
+    // const message = messages[index];
+    // console.log(message);
+
+    // if (!message.save) {
+    //   saveMessage(message.value);
+    // } else {
+
+    // }
 
     setMessages(prevMessages =>
       prevMessages.map((message, messageIndex) =>
@@ -66,6 +73,18 @@ function App() {
       )
     )
   }
+
+  // const saveMessage = async (message: string): Promise<void> => {
+  //   try {
+  //     const response = await axios.post(apiurl + 'notes', {
+  //       data: message,
+  //     })
+  //     console.log(response);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }
+
 
   const getNotePosition = (id: number) => {
     return notes.findIndex(note => note.id === id);
@@ -81,6 +100,10 @@ function App() {
 
       return arrayMove(notes, oldIndex, newIndex);
     })
+  }
+
+  const handleClick = () => {
+    console.log('handle Click');
   }
 
   useEffect(() => {
@@ -109,8 +132,14 @@ function App() {
           handleSaveMessage={handleSaveMessage}
         />
         :
-        <Notes handleDragEnd={handleDragEnd} notes={notes} />
+        <Notes handleDragEnd={handleDragEnd} notes={notes} handleClick={handleClick} />
       }
+      <div className="modal">
+        <div className="modal-header">
+
+        </div>
+        <div className="modal-content"></div>
+      </div>
     </>
   )
 }
