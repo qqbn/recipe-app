@@ -5,9 +5,9 @@ import { CSS } from "@dnd-kit/utilities";
 interface Props {
     note: NoteInterface
     id: number,
-    handleClick: () => void,
+    openModal: (arg1: string, arg2: string) => void,
 }
-const Note = ({ note, id, handleClick }: Props) => {
+const Note = ({ note, id, openModal }: Props) => {
     const {
         attributes,
         isDragging,
@@ -29,7 +29,7 @@ const Note = ({ note, id, handleClick }: Props) => {
             {...attributes}
             {...listeners}
         >
-            <div onClick={() => { if (!isDragging) handleClick() }} className="TEST max-w-[150px] flex justify-center items-start p-3 rounded-lg text-white bg-gray-800 mb-4 cursor-pointer">
+            <div onClick={() => { if (!isDragging) openModal(note.title, note.content) }} className="TEST max-w-[150px] flex justify-center items-start p-3 rounded-lg text-white bg-gray-800 mb-4 cursor-pointer">
                 {note.title}
             </div>
         </div>

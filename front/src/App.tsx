@@ -102,9 +102,6 @@ function App() {
     })
   }
 
-  const handleClick = () => {
-    console.log('handle Click');
-  }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -132,14 +129,8 @@ function App() {
           handleSaveMessage={handleSaveMessage}
         />
         :
-        <Notes handleDragEnd={handleDragEnd} notes={notes} handleClick={handleClick} />
+        <Notes handleDragEnd={handleDragEnd} notes={notes} />
       }
-      <div className="modal">
-        <div className="modal-header">
-
-        </div>
-        <div className="modal-content"></div>
-      </div>
     </>
   )
 }
