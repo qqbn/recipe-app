@@ -3,12 +3,11 @@ import Switcher from './components/Switcher'
 import Search from './components/Search'
 import Notes from './components/Notes'
 import { Message, Note } from "./interfaces/interfaces";
-import axios from 'axios';
+import axios from "./axios-config"
 import './App.css'
 import { arrayMove } from "@dnd-kit/sortable";
 
 function App() {
-  const apiurl = 'http://localhost:3000/';
   let id = 0;
   const [active, setActive] = useState(false);
   const [searchValue, setSearchValue] = useState<string>('');
@@ -92,7 +91,7 @@ function App() {
 
   const handleDragEnd = (event: any) => {
     const { active, over } = event;
-    if (active.id === over.id) return;
+    if (active.id === over?.id) return;
 
     setNotes((notes) => {
       const oldIndex = getNotePosition(active.id);
@@ -106,7 +105,7 @@ function App() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(apiurl + 'notes');
+        const response = await axios.get('/notes');
         setNotes(response.data);
       } catch (error) {
         console.log(error);
