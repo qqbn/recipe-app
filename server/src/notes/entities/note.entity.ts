@@ -1,9 +1,12 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, BeforeInsert, AfterInsert } from 'typeorm';
 
 @Entity()
 export class Note {
   @PrimaryGeneratedColumn()
   id: number;
+
+  @Column()
+  title: string;
 
   @Column('text')
   content: string;
